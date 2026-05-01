@@ -1,0 +1,76 @@
+// ユーザー管理: ログインユーザーと権限(devise仕様)
+Table users {
+  id bigint [pk, increment, note: "ユーザーID"]
+  email varchar [unique, not null, note: "メールアドレス"]
+  encrypted_password varchar [not null, note: "Devise暗号化パスワード"]
+  reset_password_token varchar [unique, note: "パスワードリセット用トークン"]
+  reset_password_sent_at timestamp [note: "パスワードリセットメール送信日時"]
+  remember_created_at timestamp [note: "ログイン情報保持開始日時"]
+  created_at timestamp [note: "作成日時"]
+  updated_at timestamp [note: "更新日時"]
+}
+
+// ユーザープロフィール: 複数管理者を識別するための個人情報(1管理者につき1プロフィール)
+Table profiles {
+  id bigint [pk, increment, note: "プロフィールID"]
+  user_id bigint [ref: > users.id, unique, not null, note: "ユーザーID(1対1)"]
+  personal_name varchar [not null, note: "個人名"]
+  email varchar [not null, unique, note: "連絡先メールアドレス"]
+  created_at timestamp [note: "作成日時"]
+  updated_at timestamp [note: "更新日時"]
+}
+
+Table prices {
+  id bigint [pk, increment, note: "価格ID"]
+  price_name varchar [not null, note: "価格名(平日料金 / 土日祝日料金)"]
+  adult_price integer [not null, note: "大人料金"]
+  student_price integer [not null, note: "中高生料金"]
+  child_price integer [not null, note: "小学生以下料金"]
+  infant_price integer [not null, note: "幼児料金"]
+  created_at timestamp [note: "作成日時"]
+  updated_at timestamp [note: "更新日時"]
+}
+
+Table daily_slots {
+  applicable_date date [pk, note: "日付"]
+  max_capacity integer [not null, default: 500, note: "来場上限人数"]
+  price_id bigint [ref: > prices.id, not null, note: "紐づく価格ID"]
+  created_at timestamp [note: "作成日時"]
+  updated_at timestamp [note: "更新日時"]
+}
+
+Table reservations {
+  res_code varchar(10) [pk, note: "予約コード"]
+  daily_slot_date date [ref: > daily_slots.applicable_date, not null, note: "対象日付"]
+  personal_name varchar [not null, note: "予約者名"]
+  email varchar [not null, note: "予約者メールアドレス"]
+  total_price integer [not null, note: "合計金額"]
+  status reservation_status [default: "pending", not null, note: "予約ステータス"]
+  created_at timestamp [note: "作成日時"]
+  updated_at timestamp [note: "更新日時"]
+}
+
+enum reservation_status {
+  pending [note: "未確定"]
+  confirmed [note: "確定"]
+  visited [note: "来場済み"]
+  cancelled [note: "キャンセル"]
+}
+
+Table reservation_details {
+  id bigint [pk, increment, note: "予約詳細ID"]
+  res_code varchar(10) [ref: > reservations.res_code, not null, note: "予約コード"]
+  person_type person_type [not null, note: "来場者区分"]
+  number_of_people integer [not null, note: "人数"]
+  price integer [not null, note: "予約時確定の単価"]
+  subtotal integer [not null, note: "小計"]
+  created_at timestamp [note: "作成日時"]
+  updated_at timestamp [note: "更新日時"]
+}
+
+enum person_type {
+  adult [note: "大人"]
+  student [note: "中高生"]
+  child [note: "小学生以下"]
+  infant [note: "幼児"]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "reservation_system",
+  "dockerComposeFile": "../compose.yaml",
+  "service": "web",
+  "workspaceFolder": "/app_name",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "KoichiSasada.vscode-rdbg",
+        "misogi.ruby-rubocop",
+        "aki77.rails-routes",
+        "bung87.rails"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "ruby.useBundlerWithRubocop": true
+      }
+    }
+  },
+
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  "postCreateCommand": "bundle install",
+
+  "remoteUser": "root"
+}

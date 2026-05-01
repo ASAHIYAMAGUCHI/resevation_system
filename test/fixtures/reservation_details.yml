@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  res_code: MyString
+  number_of_people: 1
+  price: 1
+  subtotal: 1
+
+two:
+  res_code: MyString
+  number_of_people: 1
+  price: 1
+  subtotal: 1

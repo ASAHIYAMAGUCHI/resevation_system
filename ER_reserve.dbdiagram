@@ -1,0 +1,108 @@
+{
+  "version": "1.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "users",
+      "schemaName": "public",
+      "x": 12,
+      "y": 12
+    },
+    {
+      "name": "profiles",
+      "schemaName": "public",
+      "x": 554.537109375,
+      "y": 12
+    },
+    {
+      "name": "prices",
+      "schemaName": "public",
+      "x": 12,
+      "y": 386
+    },
+    {
+      "name": "daily_slots",
+      "schemaName": "public",
+      "x": 504.5498046875,
+      "y": 386
+    },
+    {
+      "name": "reservations",
+      "schemaName": "public",
+      "x": 996.33154296875,
+      "y": 386
+    },
+    {
+      "name": "reservation_details",
+      "schemaName": "public",
+      "x": 1501.4375,
+      "y": 386
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": [
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "profiles",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "prices",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "price_id"
+      ],
+      "secondTableName": "daily_slots",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "applicable_date"
+      ],
+      "firstTableName": "daily_slots",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "daily_slot_date"
+      ],
+      "secondTableName": "reservations",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "res_code"
+      ],
+      "firstTableName": "reservations",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "res_code"
+      ],
+      "secondTableName": "reservation_details",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    }
+  ]
+}
