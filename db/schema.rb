@@ -52,21 +52,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_30_081747) do
     t.integer "number_of_people", null: false
     t.enum "person_type", null: false, enum_type: "person_type"
     t.integer "price", null: false
-    t.string "res_code", limit: 10, null: false
+    t.bigint "reservation_id", null: false
     t.integer "subtotal", null: false
     t.datetime "updated_at", null: false
-    t.index ["res_code"], name: "index_reservation_details_on_res_code"
+    t.index ["reservation_id", "person_type"], name: "idx_reservation_details_on_reservation_and_type", unique: true
   end
 
-  create_table "reservations", primary_key: "res_code", id: { type: :string, limit: 10 }, force: :cascade do |t|
+  create_table "reservations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "daily_slot_date", null: false
     t.string "email", null: false
     t.string "personal_name", null: false
+    t.string "res_code", limit: 10, null: false
     t.enum "status", default: "pending", null: false, enum_type: "reservation_status"
     t.integer "total_price", null: false
     t.datetime "updated_at", null: false
-    t.index ["daily_slot_date"], name: "index_reservations_on_daily_slot_date"
+    t.index ["daily_slot_date", "status"], name: "idx_reservations_on_date_and_status"
+    t.index ["res_code"], name: "index_reservations_on_res_code", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -83,6 +85,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_30_081747) do
 
   add_foreign_key "daily_slots", "prices"
   add_foreign_key "profiles", "users"
-  add_foreign_key "reservation_details", "reservations", column: "res_code", primary_key: "res_code"
+  add_foreign_key "reservation_details", "reservations"
   add_foreign_key "reservations", "daily_slots", column: "daily_slot_date", primary_key: "applicable_date"
 end

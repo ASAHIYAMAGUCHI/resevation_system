@@ -40,7 +40,8 @@ Table daily_slots {
 }
 
 Table reservations {
-  res_code varchar(10) [pk, note: "予約コード"]
+  id bigint [pk, increment, note: "予約ID"]
+  res_code varchar(10) [unique, not null, note: "予約コード(表示・照会用)"]
   daily_slot_date date [ref: > daily_slots.applicable_date, not null, note: "対象日付"]
   personal_name varchar [not null, note: "予約者名"]
   email varchar [not null, note: "予約者メールアドレス"]
@@ -48,6 +49,11 @@ Table reservations {
   status reservation_status [default: "pending", not null, note: "予約ステータス"]
   created_at timestamp [note: "作成日時"]
   updated_at timestamp [note: "更新日時"]
+
+  indexes {
+    res_code [unique, name: "idx_reservations_on_res_code"]
+    (daily_slot_date, status) [name: "idx_reservations_on_date_and_status", note: "日付×ステータスの複合検索用"]
+  }
 }
 
 enum reservation_status {
@@ -59,13 +65,17 @@ enum reservation_status {
 
 Table reservation_details {
   id bigint [pk, increment, note: "予約詳細ID"]
-  res_code varchar(10) [ref: > reservations.res_code, not null, note: "予約コード"]
+  reservation_id bigint [ref: > reservations.id, not null, note: "予約ID(整数FK)"]
   person_type person_type [not null, note: "来場者区分"]
   number_of_people integer [not null, note: "人数"]
   price integer [not null, note: "予約時確定の単価"]
   subtotal integer [not null, note: "小計"]
   created_at timestamp [note: "作成日時"]
   updated_at timestamp [note: "更新日時"]
+
+  indexes {
+    (reservation_id, person_type) [unique, name: "idx_reservation_details_on_reservation_and_type", note: "同一予約内の別々の来場者区分の重複防止 + 複合検索用"]
+  }
 }
 
 enum person_type {
