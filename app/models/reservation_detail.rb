@@ -6,7 +6,7 @@ class ReservationDetail < ApplicationRecord
     infant:  'infant'
   }
 
-  belongs_to :reservation, foreign_key: :res_code, primary_key: :res_code
+  belongs_to :reservation
 
   validates :person_type, presence: true
   validates :number_of_people, presence: true, numericality: { greater_than: 0 }

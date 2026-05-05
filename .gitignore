@@ -42,3 +42,11 @@
 /config/master.key
 
 .docker_build
+
+# テスト用シードデータ
+/db/seeds/01_users.rb
+/db/seeds/02_profiles.rb
+/db/seeds/03_prices.rb
+/db/seeds/04_daily_slots.rb
+/db/seeds/05_resevations.rb
+/db/seeds/06_resevation_details.rb

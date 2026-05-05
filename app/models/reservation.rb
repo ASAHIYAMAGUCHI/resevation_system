@@ -1,6 +1,4 @@
 class Reservation < ApplicationRecord
-  self.primary_key = 'res_code'
-
   enum :status, {
     pending:   'pending',
     confirmed: 'confirmed',
@@ -9,9 +7,7 @@ class Reservation < ApplicationRecord
   }
 
   belongs_to :daily_slot, foreign_key: :daily_slot_date, primary_key: :applicable_date
-  has_many :reservation_details, foreign_key: :res_code,
-                                  primary_key: :res_code,
-                                  dependent: :destroy
+  has_many :reservation_details, dependent: :destroy
 
   accepts_nested_attributes_for :reservation_details, allow_destroy: true
 
