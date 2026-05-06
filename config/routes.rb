@@ -21,8 +21,8 @@ Rails.application.routes.draw do
 
   # ─── 管理者向け ────────────────────────────────────────
   # Deviseによる認証（URLを /manage/auth/... に変更してセキュリティ向上）
-  devise_for :users, path: "manage/auth",
-                     path_names: { sign_in: "login", sign_out: "logout" },
+  devise_for :users, path: "manage",
+                     path_names: { sign_in: "sign_in", sign_out: "sign_out" },
                      skip: [:registrations, :passwords, :confirmations, :unlocks]
 
   namespace :manage do
