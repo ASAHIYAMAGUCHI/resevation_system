@@ -1,1 +1,39 @@
-<h1>Hello World</h1>
+<% content_for :title, "空き状況カレンダー" %>
+
+<div class="calendar-wrapper">
+  <h1>空き状況カレンダー</h1>
+
+  <%= month_calendar events: @daily_slots do |date, slots| %>
+    <div class="day-number"><%= date.day %></div>
+    <% if slots.any? %>
+      <div class="slot-badge open">受付中</div>
+    <% end %>
+  <% end %>
+</div>
+
+<style>
+  .calendar-wrapper {
+    max-width: 760px;
+    margin: 40px auto;
+    font-family: sans-serif;
+  }
+  .calendar-wrapper h1 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  .day-number {
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  .slot-badge {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .slot-badge.open {
+    background: #c6f6d5;
+    color: #276749;
+  }
+</style>

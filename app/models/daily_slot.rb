@@ -8,4 +8,8 @@ class DailySlot < ApplicationRecord
 
   validates :applicable_date, presence: true
   validates :max_capacity, presence: true, numericality: { greater_than: 0 }
+
+  def start_time
+    applicable_date.to_time
+  end
 end

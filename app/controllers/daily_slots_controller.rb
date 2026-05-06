@@ -1,6 +1,6 @@
 class DailySlotsController < ApplicationController
   def index
-    @daily_slots = DailySlot.order(:applicable_date)
+    @daily_slots = DailySlot.all
   end
 
   def show
