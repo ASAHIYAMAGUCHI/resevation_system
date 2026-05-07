@@ -91,13 +91,13 @@
     },
     {
       "firstFieldNames": [
-        "res_code"
+        "id"
       ],
       "firstTableName": "reservations",
       "firstSchemaName": "public",
       "firstRelation": "1",
       "secondFieldNames": [
-        "res_code"
+        "reservation_id"
       ],
       "secondTableName": "reservation_details",
       "secondSchemaName": "public",

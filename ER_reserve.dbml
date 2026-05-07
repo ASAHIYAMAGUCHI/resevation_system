@@ -33,10 +33,18 @@ Table prices {
 
 Table daily_slots {
   applicable_date date [pk, note: "日付"]
-  max_capacity integer [not null, default: 500, note: "来場上限人数"]
-  price_id bigint [ref: > prices.id, not null, note: "紐づく価格ID"]
+  status daily_slot_status [not null, default: "open", note: "日別ステータス"]
+  max_capacity integer [note: "来場上限人数(受付中の場合のみ有効)"]
+  price_id bigint [ref: > prices.id, note: "紐づく価格ID(受付中の場合のみ有効)"]
   created_at timestamp [note: "作成日時"]
   updated_at timestamp [note: "更新日時"]
+}
+
+enum daily_slot_status {
+  open           [note: "受付中"]
+  closed_regular [note: "定休日"]
+  closed_temp    [note: "臨時休業"]
+  suspended      [note: "受付停止"]
 }
 
 Table reservations {
