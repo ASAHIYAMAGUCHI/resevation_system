@@ -16,13 +16,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_30_081747) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "daily_slot_status", ["open", "closed_regular", "closed_temp", "suspended"]
   create_enum "person_type", ["adult", "student", "child", "infant"]
   create_enum "reservation_status", ["pending", "confirmed", "visited", "cancelled"]
 
   create_table "daily_slots", primary_key: "applicable_date", id: :date, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.integer "max_capacity", default: 500, null: false
-    t.bigint "price_id", null: false
+    t.integer "max_capacity"
+    t.bigint "price_id"
+    t.enum "status", default: "open", null: false, enum_type: "daily_slot_status"
     t.datetime "updated_at", null: false
     t.index ["price_id"], name: "index_daily_slots_on_price_id"
   end
